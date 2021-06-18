@@ -39,8 +39,10 @@ namespace lfsm {
 
         bool calculateTernarFunc(ternarMatrtix funcTernarMatrix, string funcTemplate);
 
+        bool cmpstr(std::string exampleStr, std::string controlStr);
         void beforeEnter();
         void beforeExit();
+
 
     };
     template <size_t S, size_t X, size_t Y>
@@ -118,7 +120,27 @@ namespace lfsm {
                 break;
             }
             else {
-                answer = funcTernarMatrix[i] == funcTemplate;
+                answer = cmpstr(funcTernarMatrix[i], funcTemplate);
+            }
+        }
+        return answer;
+    }
+
+    template <size_t S, size_t X, size_t Y>
+    bool TernarFSM<S, X, Y>::cmpstr(std::string exampleStr, std::string controlStr) {
+        bool answer = true;
+        if (exampleStr.length() != controlStr.length()) {
+            answer = false;
+        }
+        else {
+            for (int i = 0; i < exampleStr.size(); i++) {
+                if (exampleStr[i] == '-') {
+                    continue;
+                }
+                else if (exampleStr[i] != controlStr[i]) {
+                    answer = false;
+                    break;
+                }
             }
         }
         return answer;
