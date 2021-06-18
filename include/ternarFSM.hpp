@@ -23,7 +23,7 @@ namespace lfsm {
 
         void process(void);
 
-        std::bitset<S> getState();
+        std::bitset<S> get_state();
 
     private:
         ternarFunctions transitionFunctions;		///Функции перехода
@@ -33,15 +33,15 @@ namespace lfsm {
         bitset<Y>& outputSignals;
         bitset<S> state;
 
-        void activateOutputSignals();
+        void activate_output_signals();
 
-        bitset<S> calculateNextState();
+        bitset<S> calculate_next_state();
 
-        bool calculateTernarFunc(ternarMatrtix funcTernarMatrix, string funcTemplate);
+        bool calculate_next_state(ternarMatrtix funcTernarMatrix, string funcTemplate);
 
         bool cmpstr(std::string exampleStr, std::string controlStr);
-        void beforeEnter();
-        void beforeExit();
+        void before_enter();
+        void before_exit();
 
 
     };
@@ -65,23 +65,23 @@ namespace lfsm {
     template <size_t S, size_t X, size_t Y>
     void TernarFSM<S, X, Y>::process()
     {
-        this->state = calculateNextState();
-        activateOutputSignals();
+        this->state = calculate_next_state();
+        activate_output_signals();
     }
 
     template <size_t S, size_t X, size_t Y>
-    std::bitset<S> TernarFSM<S, X, Y>::getState() {
+    std::bitset<S> TernarFSM<S, X, Y>::get_state() {
         return state;
     }
 
     template <size_t S, size_t X, size_t Y>
-    void TernarFSM<S, X, Y>::activateOutputSignals()
+    void TernarFSM<S, X, Y>::activate_output_signals()
     {
         std::string controlString = inputSignals.to_string() + state.to_string();
         outputSignals.reset();
         for (int i = 0; i < outputFunctions.size(); i++)
         {
-            if (calculateTernarFunc(outputFunctions[i], controlString))
+            if (calculate_next_state(outputFunctions[i], controlString))
             {
                 outputSignals.set(i);
             }
@@ -89,7 +89,7 @@ namespace lfsm {
     }
 
     template <size_t S, size_t X, size_t Y>
-    bitset<S> TernarFSM<S, X, Y>::calculateNextState()
+    bitset<S> TernarFSM<S, X, Y>::calculate_next_state()
     {
         bitset<S> newState = this->state;
 
@@ -97,11 +97,11 @@ namespace lfsm {
 
         for (size_t i = 0; i < transitionFunctions.first.size(); i++)
         {
-            if (calculateTernarFunc(transitionFunctions.first[i], controlString))
+            if (calculate_next_state(transitionFunctions.first[i], controlString))
             {
                 newState.set(i, 1);
             }
-            if (calculateTernarFunc(transitionFunctions.second[i], controlString))
+            if (calculate_next_state(transitionFunctions.second[i], controlString))
             {
                 newState.set(i, 0);
             }
@@ -110,7 +110,7 @@ namespace lfsm {
     }
 
     template <size_t S, size_t X, size_t Y>
-    bool TernarFSM<S, X, Y>::calculateTernarFunc(ternarMatrtix funcTernarMatrix,
+    bool TernarFSM<S, X, Y>::calculate_next_state(ternarMatrtix funcTernarMatrix,
                                                  string funcTemplate)
     {
         bool answer = false;
