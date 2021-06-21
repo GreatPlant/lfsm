@@ -30,11 +30,4 @@ struct EventHash {
 	}
 };
 
-/*--START STATIC TEST--*/
-static_assert(Event<15>::idx == 15);
-
-Event<10> e;
-static_assert(e.idx == 10);
-/*--END STATIC TEST--*/
-
-#endif /* EVENT_HPP_ */
+#endif

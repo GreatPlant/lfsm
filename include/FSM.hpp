@@ -117,7 +117,7 @@ namespace lfsm {
         }
 
         void on_event_impl (Key& k){
-            before_enter();
+            before_exit();
 
             transition_v tr_var = transitions[k];
 
@@ -137,14 +137,14 @@ namespace lfsm {
                     ref_k.state_idx = target_t::idx;
                     ref_state = target_t{};
 
+                    before_enter();
+
                     state_action();
                     functor_t{}();
                 }
             };
 
             std::visit(l, tr_var);
-
-            before_exit();
         }
 
         using map_type = std::unordered_map<Key, transition_v, KeyHash, KeyEqual>;

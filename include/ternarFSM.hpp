@@ -37,7 +37,7 @@ namespace lfsm {
 
         bitset<S> calculate_next_state();
 
-        bool calculate_next_state(ternarMatrtix funcTernarMatrix, string funcTemplate);
+        bool calculate_function(ternarMatrtix funcTernarMatrix, string funcTemplate);
 
         bool cmpstr(std::string exampleStr, std::string controlStr);
         void before_enter();
@@ -81,7 +81,7 @@ namespace lfsm {
         outputSignals.reset();
         for (int i = 0; i < outputFunctions.size(); i++)
         {
-            if (calculate_next_state(outputFunctions[i], controlString))
+            if (calculate_function(outputFunctions[i], controlString))
             {
                 outputSignals.set(i);
             }
@@ -97,11 +97,11 @@ namespace lfsm {
 
         for (size_t i = 0; i < transitionFunctions.first.size(); i++)
         {
-            if (calculate_next_state(transitionFunctions.first[i], controlString))
+            if (calculate_function(transitionFunctions.first[i], controlString))
             {
                 newState.set(i, 1);
             }
-            if (calculate_next_state(transitionFunctions.second[i], controlString))
+            if (calculate_function(transitionFunctions.second[i], controlString))
             {
                 newState.set(i, 0);
             }
@@ -110,7 +110,7 @@ namespace lfsm {
     }
 
     template <size_t S, size_t X, size_t Y>
-    bool TernarFSM<S, X, Y>::calculate_next_state(ternarMatrtix funcTernarMatrix,
+    bool TernarFSM<S, X, Y>::calculate_function(ternarMatrtix funcTernarMatrix,
                                                  string funcTemplate)
     {
         bool answer = false;

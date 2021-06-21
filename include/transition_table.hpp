@@ -1,7 +1,6 @@
 #ifndef TRANSITION_TABLE_HPP_
 #define TRANSITION_TABLE_HPP_
 
-#pragma once
 #include <variant>
 #include "transition.hpp"
 
@@ -35,7 +34,6 @@ constexpr bool operator!=(Collection<Ts...>, Collection<Ts...>){
 }
   struct NullType {};
 
-  /////////////////  NoDuplicates from LOKI ////////////////
   template<class X, class Y> struct Glue;
   template<class T, class... Ts>
   struct Glue<T, Collection<Ts...>> {
@@ -71,17 +69,7 @@ constexpr bool operator!=(Collection<Ts...>, Collection<Ts...>){
     public:
       using Result = typename Glue<T, L2>::Result;
   };
-///////////////// LOKI ////////////////
 } // end of namespace th (table_helper)
-
-
-/*--START STATIC TEST--*/
-using tc = th::Collection<char, int, char, double>;
-using tcwd = typename th::NoDuplicates<tc>::Result;
-
-static_assert(tcwd{} == th::Collection<char, int, double>{});
-
-/*--STOP STATIC TEST--*/
 
 
 template<typename... Types>
@@ -92,7 +80,7 @@ constexpr auto get_var (th::Collection<Types...>){
 struct TransitionTableBase{};
 
 template<typename... T>
-struct TransitionTable : TransitionTableBase{
+struct TransitionTable : TransitionTableBase {
 
 	using test_t =  typename th::NoDuplicates<th::Collection<T...>>::Result;
 	static_assert(std::is_same_v<test_t, th::Collection<T...>>, "Repeated transitions");

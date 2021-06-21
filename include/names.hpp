@@ -25,4 +25,4 @@ constexpr unsigned int name (const char* n){
 	  return res;
 };
 
-#endif /* NAMES_HPP_ */
+#endif

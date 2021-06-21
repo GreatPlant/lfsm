@@ -1,8 +1,6 @@
 #ifndef TRANSITION_HPP_
 #define TRANSITION_HPP_
 
-#pragma once
-
 #include "guard.hpp"
 #include "state.hpp"
 #include "event.hpp"
